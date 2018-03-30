@@ -6,3 +6,7 @@ from django.apps import AppConfig
 
 class CandidateappConfig(AppConfig):
     name = 'candidateapp'
+    label = 'candidateapp'
+
+def ready(self):
+    import name.signals

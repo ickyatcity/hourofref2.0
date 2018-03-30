@@ -8,8 +8,13 @@ from django.core.exceptions import ValidationError
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+
+# signals
+import django.dispatch
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
+from django.dispatch import Signal
+from .signals import user_attributes_changed
 
 
 class CandidatesScoreManager(models.Manager):
@@ -25,22 +30,29 @@ class CandidatesScoreManager(models.Manager):
             user_qs = None
             score_qs = CandidatesWiki.objects.get(candidate_id=candidate_obj.candidate_id)
 
-
         if user_qs:
             userload = CandidateUserRelx.objects.filter(users=user).delete()
-            print ('score_qs1',  score_qs.score_up - 1 )
-            finalscore =   score_qs.score_up -1
-            CandidatesWiki.objects.filter(slug=slug).update(
-            score_up=finalscore)
+            print ('score_qs1', score_qs.score_up - 1)
+            finalscore = score_qs.score_up - 1
+            candidatewiki = CandidatesWiki.objects.filter(slug=slug).update(
+                score_up=finalscore)
+
+            CandidatesWiki().save()
+            user_attributes_changed.send(sender=self.__class__, candidate_id=candidate_obj.candidate_id, score_up=finalscore)
+
 
         else:
-            userload = CandidateUserRelx.objects.create(candidate_id=CandidatesWiki.objects.get(slug=slug) , users=user)
-            finalscore =   score_qs.score_up + 1
+            userload = CandidateUserRelx.objects.create(candidate_id=CandidatesWiki.objects.get(slug=slug), users=user)
+            finalscore = score_qs.score_up + 1
             score_qs.score_up = finalscore
-            CandidatesWiki.objects.filter(slug=slug).update(
-            score_up=finalscore)
-        
-        return finalscore    
+            candidatewiki = CandidatesWiki.objects.filter(slug=slug).update(
+                score_up=finalscore)
+
+            CandidatesWiki().save()
+            user_attributes_changed.send(sender=self.__class__, candidate_id=candidate_obj.candidate_id, score_up=finalscore)
+
+
+        return finalscore
 
     def score_toggle_down(self, user, candidate_obj, user_obj, slug):
         # finalscore = 0  
@@ -54,22 +66,20 @@ class CandidatesScoreManager(models.Manager):
             user_qs = None
             score_qs = CandidatesWiki.objects.get(candidate_id=candidate_obj.candidate_id)
 
-
         if user_qs:
             userload = CandidateUserRelx.objects.filter(users=user).delete()
-            print ( 'score_qs1',  score_qs.score_up - 1 )
-            finalscore =   score_qs.score_up -1
+            print ('score_qs1', score_qs.score_up - 1)
+            finalscore = score_qs.score_up - 1
             CandidatesWiki.objects.filter(slug=slug).update(
-            score_up=finalscore)
+                score_up=finalscore)
 
         else:
-            userload = CandidateUserRelx.objects.create(candidate_id=CandidatesWiki.objects.get(slug=slug) , users=user)
-            finalscore =   score_qs.score_up + 1
+            userload = CandidateUserRelx.objects.create(candidate_id=CandidatesWiki.objects.get(slug=slug), users=user)
+            finalscore = score_qs.score_up + 1
             score_qs.score_up = finalscore
             CandidatesWiki.objects.filter(slug=slug).update(
-            score_up=finalscore)
-        return finalscore    
-
+                score_up=finalscore)
+        return finalscore
 
 
 class CandidatesWiki(models.Model):
@@ -98,81 +108,51 @@ class CandidatesWiki(models.Model):
         get_latest_by = 'fecha_ini_det'
 
     def get_absolute_url(self):
-        return reverse("candidatesapp:candidatedetail", kwargs={"slug":self.slug})
-
+        return reverse("candidatesapp:candidatedetail", kwargs={"slug": self.slug})
 
 
 class CandidateUserRelx(models.Model):
-    candidate_id = models.ForeignKey(CandidatesWiki,  on_delete=models.CASCADE)
-    users = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE )
-    updated     = models.DateTimeField(auto_now=True)
-    timestamp   = models.DateTimeField(auto_now_add=True)
+    candidate_id = models.ForeignKey(CandidatesWiki, on_delete=models.CASCADE)
+    users = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    updated = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
     objects = CandidatesScoreManager()
 
 
+
+class CandidateScoreHistManager(models.Manager):
+    def create_score_entry(self, candidate_id, score):
+        score_entry = self.create(candidate_id = candidate_id, score=score)
+        return score_entry
+
+
+
+
 class CandidateScoreHist(models.Model):
-    candidate_id = models.ForeignKey(CandidatesWiki, on_delete=models.CASCADE)
-    # candidate_id = models.ForeignKey(
-    #     'CandidatesWiki',
-    #     on_delete=models.CASCADE,
-    # )
-    score = models.IntegerField()
-    timestamp   = models.DateTimeField(auto_now_add=True)
-    updated     = models.DateTimeField(auto_now=True)
+    candidate_id = models.CharField(max_length=255)
+    score = models.IntegerField(default=0)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    objects = CandidateScoreHistManager()
 
 
+# @receiver(post_save, sender=CandidatesWiki, dispatch_uid="score")
 
+@receiver(user_attributes_changed)
+def create_user_scorehist(sender, candidate_id, score_up, **kwargs):
 
+    scorechange = CandidateScoreHist.objects.create_score_entry(candidate_id, score_up)
+    scorechange.save()
 
-# @receiver(post_save, sender=CandidatesWiki, dispatch_uid=create_user_scorehist)
-def create_user_scorehist(sender, instance, update_fields,  **kwargs):
-    if 'score_up' in update_fields:
-            CandidateScoreHist.objects.create(kwargs=['instance'])
-
-            # instance.score = instance.candidate_id.score
-    print ('I am here being updated')
-
-
-post_save.connect(create_user_scorehist, sender=CandidatesWiki, dispatch_uid="create_user_scorehist")
-
-# post_save.connect(create_user_scorehist, sender=CandidatesWiki)
-
-
-
-    # @receiver(post_save, sender=CandidatesWiki)
-    # def save_user_profile(sender, instance, update_fields=['score'] **kwargs):
-    #     instance.profile.save()
-
-
-
-
-
-   # from django.db.models.signals import post_save
-   #  def default_subject(sender, instance, using):
-   #      instance.price = instance.product.price
-   #  pre_save.connect(default_subject, sender=Sell)
-
-
-   #  # @receiver(post_save, sender=User)
-    # def create_user_profile(sender, instance, created, **kwargs):
-    #     if created:
-    #         Profile.objects.create(user=instance)
-
-    # @receiver(post_save, sender=User)
-    # def save_user_profile(sender, instance, **kwargs):
-    # instance.profile.save()
-
-
-    # def save(self, *args, **kwargs):
-    #     self.score = self.CandidatesWiki.score
-    #     super(CandidateScoreHist, self).save(*args, **kwargs)
+    print ('I am here being updated',score_up)
 
 
 
 
 class Candidate(models.Model):
-    cadidate    = models.CharField(max_length=225)
-    cadidate_desc    = models.CharField(max_length=225)
+    cadidate = models.CharField(max_length=225)
+    cadidate_desc = models.CharField(max_length=225)
     url_wiki = models.CharField(max_length=255, blank=True, null=True)
     title_wiki = models.CharField(max_length=255, blank=True, null=True)
     content_wiki = models.TextField(blank=True, null=True)
@@ -181,51 +161,42 @@ class Candidate(models.Model):
     links_wiki = models.TextField(blank=True, null=True)
     sections_wiki = models.TextField(blank=True, null=True)
     summary_wiki = models.TextField(blank=True, null=True)
-    user        = models.ForeignKey(settings.AUTH_USER_MODEL,  on_delete=models.CASCADE)
-    liked       = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='liked')
-    reply       = models.BooleanField(verbose_name='Is a reply?', default=False)
-    updated     = models.DateTimeField(auto_now=True)
-    timestamp   = models.DateTimeField(auto_now_add=True)
-    score       = models.IntegerField()
-    score_up    = models.IntegerField(settings.AUTH_USER_MODEL, blank=True)
-    score_down  = models.IntegerField(settings.AUTH_USER_MODEL, blank=True)
-    slug        = models.TextField(max_length=15)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    liked = models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True, related_name='liked')
+    reply = models.BooleanField(verbose_name='Is a reply?', default=False)
+    updated = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    score = models.IntegerField()
+    score_up = models.IntegerField(settings.AUTH_USER_MODEL, blank=True)
+    score_down = models.IntegerField(settings.AUTH_USER_MODEL, blank=True)
+    slug = models.TextField(max_length=15)
 
     # objects = CandidatesUserManager()
-
 
     # def get_absolute_url(self):
     #     return reverse("candidatesapp:candidatedetail", kwargs={"slug":self.slug})
 
     def get_absolute_url(self):
-        return reverse("candidatesapp:candidatedetail", kwargs={"pk":self.pk})
-
+        return reverse("candidatesapp:candidatedetail", kwargs={"pk": self.pk})
 
     class Meta:
         ordering = ['-timestamp']
 
+        # if user in :
+        #     print 'i am here'
+        #         # user_obj.users.remove(user)
+        #         # candidate_obj.score_up = candidate_obj.score_up - 1
+        #         # candidate_obj.score = candidate_obj.score_up
+        #         # finalscore = candidate_obj.score
+        # else:
+        #         # user_obj.users.add(user)
+        #         # candidate_obj.score_up = candidate_obj.score_up + 1
+        #         # candidate_obj.score = candidate_obj.score_up
+        #         # finalscore = candidate_obj.score
+        #      print ' I am not here'
 
-
-
-
-
-                # if user in :
-                #     print 'i am here'
-                #         # user_obj.users.remove(user)
-                #         # candidate_obj.score_up = candidate_obj.score_up - 1 
-                #         # candidate_obj.score = candidate_obj.score_up
-                #         # finalscore = candidate_obj.score
-                # else:
-                #         # user_obj.users.add(user)
-                #         # candidate_obj.score_up = candidate_obj.score_up + 1
-                #         # candidate_obj.score = candidate_obj.score_up
-                #         # finalscore = candidate_obj.score
-                #      print ' I am not here'   
- 
-                # user_obj.save()        
-                # return finalscore
-
-
+        # user_obj.save()
+        # return finalscore
 
 #     # def score_toggle_down(self, user, candidate_obj):
 #     #         if user in candidate_obj.users.all():
@@ -254,7 +225,7 @@ class Candidate(models.Model):
 # class CandidatesUserManager(models.Manager):
 
 #     def like_toggle(self, user):
-      
+
 #             is_liked = False
 #             tweet_obj.liked.remove(user)
 #         else:

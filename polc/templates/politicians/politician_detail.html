@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}{{ block.super }} | detailed view{% endblock title %}
+
+<!-- https://docs.djangoproject.com/en/2.0/ref/templates/language/#template-inheritance -->
+
+{% block content %}
+ <!-- Page Content -->
+    <div class="container pt-4 pb-5">
+
+      <!-- Portfolio Item Heading -->
+   <!--    <h1 class="my-4">{{ object.candiate_name }}
+        <small>Secondary Text</small>
+      </h1> -->
+
+      <!-- Portfolio Item Row -->
+      <div style="background:transparent !important"  class="jumbotron border border-info p-0 ">
+          <div class="row">
+            <div class="col-md-3">
+              <img class="img-fluid rounded" src="{{object.images_wiki}}" alt="">
+            </div>
+            <!-- buttons defined -->
+            <div style="background:transparent !important"  class="jumbotron col-md-9 p-4 m-0">
+               <div class="row p-0 m-0">
+
+                                <!-- https://github.com/janosgyerik/jquery-upvote -->
+                
+                       <div id="topic" class="upvote">
+                            <a class="upvote upvote-on"></a>
+                              <span class="count" id = "data-id" >6</span>
+                            <a class="downvote"></a>
+                       
+                        </div>
+                      <!--     <a href="#" class="btn btn-light m-1" id = 'score-up-detail'> Like</a>
+                          <h4 class ="mt-3 mr-3 ml-3" id = "score-net"> 43 </h4>
+                          <a href="#" class="btn btn-outline-danger btn-sm icon ion-arrow-down-a  m-1" id = 'score-down-detail'>Diskike </a> -->
+                       
+                     <h1 class="blog-post-title pt-3 mt-0 pl-3" id = "detail-candidate-name">{{ object.candiate_name }}</h1>
+                </div>
+                <p class="lead">This example is a quick exercise to illustrate how the top-aligned navbar works. As you scroll, this navbar remains in its original   position and moves with the rest of the page.</p>
+            </div>
+          </div>
+        </div>
+        <hr />
+
+<!-- style="background-color:#E0E0E0" -->
+        <div  style="background:transparent !important"  class="jumbotron mt-1 col-md-12 pt-0 pb-0 m-0 text-dark border font-lato">
+            <h4 class="my-3 pt-0 card-text ">Summary</h4>
+            <p>{{ object.summary_wiki|linebreaks  }} </p> <br/>
+        </div>
+
+        <div  style="background:transparent !important"  class=" jumbotron mt-1 col-md-12 pt-0 pb-0 mt-3 text-dark border">
+            <h4 class="my-3 pt-0 card-text">Recent Stories</h4>
+            <p>{{ object.summary_wiki|linebreaks  }} </p> <br/>
+        </div>
+      <!-- /.row -->
+
+<!--       <div id="topic" class="upvote">
+          <a class="upvote upvote-on"></a>
+          <span class="count">6</span>
+          <a class="downvote"></a>
+          <a class="star"></a>
+      </div>
+
+
+      <div id="topic" class="upvote">
+        <a class="upvote"></a>
+        <span class="count">4</span>
+        <a class="downvote downvote-on"></a>
+        <a class="star"></a>
+    </div>
+ -->
+
+    </div>
+    <!-- /.container -->
+ <!-- <hr /> -->
+{% endblock content %}

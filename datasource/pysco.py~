@@ -1,0 +1,130 @@
+#!/usr/bin/python
+import psycopg2
+from config import config
+ 
+def connect():
+    """ Connect to the PostgreSQL database server """
+    conn = None
+    try:
+        # read connection parameters
+        params = config()
+ 
+        # connect to the PostgreSQL server
+        print('Connecting to the PostgreSQL database...')
+        conn = psycopg2.connect(**params)
+ 
+        # create a cursor
+        cur = conn.cursor()
+        
+ # execute a statement
+        print('PostgreSQL database version:')
+        cur.execute('SELECT version()')
+ 
+        # display the PostgreSQL database server version
+        db_version = cur.fetchone()
+        print(db_version)
+       
+     # close the communication with the PostgreSQL
+        cur.close()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+            print('Database connection closed.')
+ 
+ 
+def create_tables():
+    """ create tables in the PostgreSQL database"""
+    commands = (
+        """
+        CREATE TABLE candidates_wiki (
+            candidate_id SERIAL PRIMARY KEY,
+			candiate_name VARCHAR(255) NOT NULL,
+			url_wiki VARCHAR(255),
+			title_wiki VARCHAR(255) ,
+			content_wiki VARCHAR(255) ,
+			images_wiki VARCHAR(255), 
+			references_wiki TEXT,
+			links_wiki VARCHAR(255), 
+			sections_wiki TEXT,
+			summary_wiki TEXT
+        )
+        """)
+    conn = None
+    try:
+        # read the connection parameters
+        params = config()
+        # connect to the PostgreSQL server
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        # create table one by one
+        for command in commands:
+            cur.execute(command)
+        # close communication with the PostgreSQL database server
+        cur.close()
+        # commit the changes
+        conn.commit()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+
+
+ 
+
+ 
+
+ 
+def create_tables():
+    """ create tables in the PostgreSQL database"""
+    commands = (
+        """
+        CREATE TABLE vendorsp (
+            vendor_id SERIAL PRIMARY KEY,
+            vendor_name VARCHAR(255) NOT NULL
+        )
+        """
+        )
+    conn = None
+    try:
+        # read the connection parameters
+        params = config()
+        # connect to the PostgreSQL server
+        conn = psycopg2.connect(**params)
+        cur = conn.cursor()
+        # create table one by one
+        for command in commands:
+            cur.execute(command)
+        # close communication with the PostgreSQL database server
+        cur.close()
+        # commit the changes
+        conn.commit()
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+ 
+ 	for sql in serial_key_sql + table_sql:
+    if sql != "":
+        self.execute(sql)
+
+ 
+ 
+if __name__ == '__main__':
+    create_tables()
+
+
+
+   #          candidate_id SERIAL PRIMARY KEY,
+			# candiate_name VARCHAR(255) NOT NULL,
+			# url_wiki VARCHAR(5) NOT NULL,
+			# title_wiki VARCHAR(255) NOT NULL,
+			# content_wiki VARCHAR(255) NOT NULL,
+			# images_wiki VARCHAR(255) NOT NULL,
+			# references_wiki VARCHAR(255) NOT NULL,
+			# links_wiki VARCHAR(255) NOT NULL,
+			# sections_wiki VARCHAR(255) NOT NULL,
+			# summary_wiki VARCHAR(255) NOT NULL,

@@ -1,0 +1,53 @@
+
+{% extends "base.html" %}
+
+{% block title %}{{ block.super }} | Welcome{% endblock title %}
+
+<!-- https://docs.djangoproject.com/en/2.0/ref/templates/language/#template-inheritance -->
+
+{% block content %}
+
+   <div class='container pt-5'>
+        <div class='col-sm-12'>
+
+              <div id ='candidate-search-results'>
+              </div>
+              <a href ='#' id='loadmore-candidates-search-results'> Load more  Candidates</a>
+
+  </div>
+</div>
+
+<!--    <div class='container pt-5'>
+        <div class='col-sm-12'>
+            {% if request.GET.q %}
+                <div id ='candidate-search-results'>
+              </div>
+               		{% for object in object_list %}
+                    <div class="media">
+                          <div class="media-left'">
+                            <a href="#">
+                              {% if object.image %}
+                                <img class="media-object" src="..." alt="...">
+                             {% endif %}
+                            </a>
+                          </div> 
+        
+                          <div class="media-body">
+                                    {{ object.candiate_name }}<br/>
+                                    {{ object.summary_wiki }}<br/>
+                                    <a href='{{ object.get_absolute_url }}'> See details </a>
+                                    <hr />
+                                    <br/>
+                          </div>
+                    </div>
+        					{% empty %}	
+        							<p> Your search - {{ request.GET.q }} - did not match any Politicians</p>  
+        					{% endfor %}
+
+            {% endif %}
+  </div>
+</div> -->
+ <!-- <hr /> -->
+{% endblock content %}
+
+

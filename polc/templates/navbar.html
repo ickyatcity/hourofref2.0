@@ -1,0 +1,44 @@
+<nav class="navbar  navbar-expand-lg navbar-dark bg-dark pb-1" >
+  <div class='container'>
+        <a class="navbar-brand" href="{% url 'home' %}">
+            <!-- <img src="/assets/brand/bootstrap-solid.svg" width="30" height="30" alt=""> -->
+            <a class="navbar-brand" href="{% url 'home' %}">Politico </a>
+             <!-- <a class="btn btn-primary pull-right" href="#">Sign In</a> -->
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+         <div class='container'>
+            <form class="form-inline my-1 my-lg-1m float-right  ">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+ 
+    </div>
+    
+    {% if user.username  %}
+      <ul class="nav nav-pills">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Hello, {{ user.username }}</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{% url 'accounts:settings' %}">Settings</a>
+              <a class="dropdown-item" href="{% url 'accounts:settings' %}">About</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+            </div>
+          </li>
+      </ul>
+    {% else %}
+      <a href="{% url 'accounts:settings' %}">Login </a>
+    {% endif %}
+</nav>
+
+
+<!-- 
+    <nav class="navbar navbar-light bg-light static-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">Politico </a>
+        <a class="btn btn-primary" href="#">Sign In</a>
+      </div>
+    </nav> -->

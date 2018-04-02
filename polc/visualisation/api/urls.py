@@ -1,15 +1,16 @@
+# urls.py
 from django.conf.urls import url
-from django.conf.urls import include
-from django.contrib import admin
-from django.views.generic.base import RedirectView
-from django.conf import settings
-from django.conf.urls.static import static
 
+# from .views import graph, play_count_by_month
 from .views import (
-    graphAPIView
+    CandidatesHistListAPIView
 )
 
-urlpatterns = [
-      url(r'^(?P<candidate_id>\d+)/disp/$', graphAPIView.as_view(), name='graph'), 
-]
 
+
+
+urlpatterns = [
+    # url(r'^$', graph),
+    # url(r'^api/play_count_by_month', play_count_by_month, name='play_count_by_month'),
+    url(r'^(?P<id>\d+)$',CandidatesHistListAPIView.as_view(), name='scorehist'),
+]

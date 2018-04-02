@@ -129,6 +129,7 @@ class CandidatesWiki(models.Model):
         managed = False
         db_table = 'candidates_wiki'
         get_latest_by = 'fecha_ini_det'
+        ordering = ['candiate_name']
 
     def get_absolute_url(self):
         return reverse("candidatesapp:candidatedetail", kwargs={"slug": self.slug})

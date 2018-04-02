@@ -137,6 +137,9 @@ $(document).ready(function(){
 		var newURL = oldURL;
 		index = oldURL.indexOf('search');
 
+        console.log(candidateName)
+
+
 		if(index == -1){
 		    index = oldURL.indexOf('candidateUrl');
 		}

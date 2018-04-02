@@ -12,6 +12,33 @@ from .pagination import StandardResultsPagination
 from .serializers import CandidateModelSerializer
 
 
+# class ScoreToggleUpAPIView(APIView):
+#     # permission_classes = [permissions.IsAuthenticated]
+#     def get(self, request, slug, format=None):
+#         tweet_qs = Tweet.objects.filter(pk=pk)
+#         # score_qs = CandidatesWiki.objects.filter(slug=slug)
+
+#         # print 'user', user_qs
+#         # print score_qs
+#         # message = "Not allowed"
+#         # if request.user.is_authenticated():
+#             finalscore = CandidatesWiki.objects.score_toggle_up(request.user, )
+#             return Response({'finalscore': finalscore})
+#         # return Response({"message": message}, status=400)
+
+
+
+# class LikeToggleAPIView(APIView):
+#     permission_classes = [permissions.IsAuthenticated]
+#     def get(self, request, pk, format=None):
+#         tweet_qs = Tweet.objects.filter(pk=pk)
+#         message = "Not allowed"
+#         if request.user.is_authenticated():
+#             is_liked = Tweet.objects.like_toggle(request.user, tweet_qs.first())
+#             return Response({'liked': is_liked})
+#         return Response({"message": message}, status=400)
+
+
 class ScoreToggleUpAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request, slug, format=None):
@@ -19,7 +46,7 @@ class ScoreToggleUpAPIView(APIView):
         user_qs = CandidateUserRelx.objects.all()
 
         message = "Not allowed"
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             valid = score_qs.candidate_id
             finalscore = CandidateUserRelx.objects.score_toggle_up(request.user, score_qs, user_qs, slug)
             print ('finalscore here', finalscore)
@@ -42,7 +69,7 @@ class CandidatesWikiListAPIView(generics.ListAPIView):
         
         # max_datetime = CandidatesWiki.objects.all().order_by('id')
         qs = CandidatesWiki.objects.all()
-
+        print('here ')
         query = self.request.GET.get("q", None)
         if query is not None:
             query = query.strip()
@@ -53,7 +80,7 @@ class CandidatesWikiListAPIView(generics.ListAPIView):
             )
         return qs 
 
-    	
+
         # requested_user = self.kwargs.get("username")
         
         # if requested_user:
@@ -86,31 +113,3 @@ class CandidatesWikiListAPIView(generics.ListAPIView):
     #             Q(summary_wiki__icontains=query)
     #         )
     #     return qs
-
-
-
-# class ScoreToggleUpAPIView(APIView):
-#     # permission_classes = [permissions.IsAuthenticated]
-#     def get(self, request, slug, format=None):
-#         tweet_qs = Tweet.objects.filter(pk=pk)
-#         # score_qs = CandidatesWiki.objects.filter(slug=slug)
-
-#         # print 'user', user_qs
-#         # print score_qs
-#         # message = "Not allowed"
-#         # if request.user.is_authenticated():
-#             finalscore = CandidatesWiki.objects.score_toggle_up(request.user, )
-#             return Response({'finalscore': finalscore})
-#         # return Response({"message": message}, status=400)
-
-
-
-# class LikeToggleAPIView(APIView):
-#     permission_classes = [permissions.IsAuthenticated]
-#     def get(self, request, pk, format=None):
-#         tweet_qs = Tweet.objects.filter(pk=pk)
-#         message = "Not allowed"
-#         if request.user.is_authenticated():
-#             is_liked = Tweet.objects.like_toggle(request.user, tweet_qs.first())
-#             return Response({'liked': is_liked})
-#         return Response({"message": message}, status=400)

@@ -9,35 +9,12 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
 
-# signals - this is to update the score history when master table is updated.
+# signals
 import django.dispatch
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.dispatch import Signal
 from .signals import user_attributes_changed
-
-
-'''
-===========================================================
-                             REFERENCES 
-===========================================================
-
-Signals - 
-
-https://medium.com/@adriennedomingus/signals-in-django-24b6a945cd97
-https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
-https://simpleisbetterthancomplex.com/tutorial/2016/07/28/how-to-create-django-signals.html
-https://docs.djangoproject.com/en/2.0/topics/signals/#receiver-functions
-https://stackoverflow.com/questions/13014411/django-post-save-signal-implementation
-http://sabinemaennel.ch/django/signals-in-django/
-
-Model Manager - 
-https://docs.djangoproject.com/en/2.0/topics/db/managers/
-
-Model - 
-https://docs.djangoproject.com/en/2.0/ref/models/instances/
-
-'''
 
 
 class CandidatesScoreManager(models.Manager):
@@ -161,7 +138,7 @@ class CandidateScoreHist(models.Model):
     objects = CandidateScoreHistManager()
 
 
-
+# @receiver(post_save, sender=CandidatesWiki, dispatch_uid="score")
 
 @receiver(user_attributes_changed)
 def create_user_scorehist(sender, candidate_id, score_up, **kwargs):
@@ -205,3 +182,54 @@ class Candidate(models.Model):
 
     class Meta:
         ordering = ['-timestamp']
+
+        # if user in :
+        #     print 'i am here'
+        #         # user_obj.users.remove(user)
+        #         # candidate_obj.score_up = candidate_obj.score_up - 1
+        #         # candidate_obj.score = candidate_obj.score_up
+        #         # finalscore = candidate_obj.score
+        # else:
+        #         # user_obj.users.add(user)
+        #         # candidate_obj.score_up = candidate_obj.score_up + 1
+        #         # candidate_obj.score = candidate_obj.score_up
+        #         # finalscore = candidate_obj.score
+        #      print ' I am not here'
+
+        # user_obj.save()
+        # return finalscore
+
+#     # def score_toggle_down(self, user, candidate_obj):
+#     #         if user in candidate_obj.users.all():
+#     #                 candidate_obj.users.remove(user)
+#     #                 candidate_obj.score_down = candidate_obj.score_down - 1
+#     #                 candidate_obj.score = candidate_obj.score_down
+#     #                 finalscore = candidate_obj.score
+#     #         else:
+#     #                 candidate_obj.users.add(user)
+#     #                 candidate_obj.score_down = candidate_obj.score_down + 1
+#     #                 candidate_obj.score = candidate_obj.score_down
+#     #                 finalscore = candidate_obj.score
+
+#     #         candidate_obj.save()           
+#     #         return finalscore
+
+#     # def like_toggle(self, user, tweet_obj):
+#     #     if user in tweet_obj.liked.all():
+#     #         is_liked = False
+#     #         tweet_obj.liked.remove(user)
+#     #     else:
+#     #         is_liked = True
+#     #         tweet_obj.liked.add(user)
+#     #     return is_liked
+
+# class CandidatesUserManager(models.Manager):
+
+#     def like_toggle(self, user):
+
+#             is_liked = False
+#             tweet_obj.liked.remove(user)
+#         else:
+#             is_liked = True
+#             tweet_obj.liked.add(user)
+#         return is_liked

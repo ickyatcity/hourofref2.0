@@ -2,10 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="10cf6529-c519-4995-8a63-a4c910817dae" name="Default" comment="">
+<<<<<<< HEAD
       <change beforePath="" afterPath="$PROJECT_DIR$/polc/templates/visualisation/graph.html" />
       <change beforePath="" afterPath="$PROJECT_DIR$/polc/visualisation/api/serializers.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/polc/candidateapp/api/views.py" afterPath="$PROJECT_DIR$/polc/candidateapp/api/views.py" />
+=======
+      <change beforePath="" afterPath="$PROJECT_DIR$/polc/candidateapp/signals.py" />
+      <change beforePath="$PROJECT_DIR$/polc/candidateapp/api/views.py" afterPath="$PROJECT_DIR$/polc/candidateapp/api/views.py" />
+      <change beforePath="$PROJECT_DIR$/polc/candidateapp/apps.py" afterPath="$PROJECT_DIR$/polc/candidateapp/apps.py" />
+>>>>>>> parent of bb906dd... Comments added
       <change beforePath="$PROJECT_DIR$/polc/candidateapp/models.py" afterPath="$PROJECT_DIR$/polc/candidateapp/models.py" />
       <change beforePath="$PROJECT_DIR$/polc/polc/settings/base.py" afterPath="$PROJECT_DIR$/polc/polc/settings/base.py" />
       <change beforePath="$PROJECT_DIR$/polc/polc/settings/local.py" afterPath="$PROJECT_DIR$/polc/polc/settings/local.py" />
@@ -23,21 +29,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
+<<<<<<< HEAD
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/polc/candidateapp/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="105">
               <caret line="131" column="34" lean-forward="false" selection-start-line="131" selection-start-column="34" selection-end-line="131" selection-end-column="34" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
+=======
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/polc/candidateapp/api/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="71" column="20" lean-forward="false" selection-start-line="71" selection-start-column="20" selection-end-line="71" selection-end-column="20" />
+            <state relative-caret-position="390">
+              <caret line="26" column="55" lean-forward="false" selection-start-line="26" selection-start-column="55" selection-end-line="26" selection-end-column="55" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -45,11 +49,54 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="models.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/polc/candidateapp/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="283">
+              <caret line="145" column="15" lean-forward="false" selection-start-line="145" selection-start-column="15" selection-end-line="145" selection-end-column="15" />
+              <folding>
+                <element signature="e#24#63#0" expanded="true" />
+              </folding>
+>>>>>>> parent of bb906dd... Comments added
+            </state>
+          </provider>
+        </entry>
+      </file>
+<<<<<<< HEAD
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/polc/candidateapp/api/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="71" column="20" lean-forward="false" selection-start-line="71" selection-start-column="20" selection-end-line="71" selection-end-column="20" />
+              <folding>
+                <element signature="e#0#30#0" expanded="true" />
+=======
+      <file leaf-file-name="apps.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/polc/candidateapp/apps.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
+              <folding>
+                <element signature="e#24#63#0" expanded="true" />
+>>>>>>> parent of bb906dd... Comments added
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+<<<<<<< HEAD
       <file leaf-file-name="search.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/polc/static-storage/js/search.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="353">
               <caret line="139" column="34" lean-forward="false" selection-start-line="139" selection-start-column="34" selection-end-line="139" selection-end-column="34" />
+=======
+      <file leaf-file-name="signals.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/polc/candidateapp/signals.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="60">
+              <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+>>>>>>> parent of bb906dd... Comments added
               <folding />
             </state>
           </provider>
@@ -284,7 +331,11 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< HEAD
     <frame x="0" y="23" width="1280" height="777" extended-state="0" />
+=======
+    <frame x="0" y="23" width="1280" height="777" extended-state="6" />
+>>>>>>> parent of bb906dd... Comments added
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
@@ -332,6 +383,16 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/polc/candidateapp/api/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="55" lean-forward="false" selection-start-line="26" selection-start-column="55" selection-end-line="26" selection-end-column="55" />
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/polc/candidateapp/signals.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -342,8 +403,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/polc/candidateapp/apps.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="23" lean-forward="true" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+        <state relative-caret-position="165">
+          <caret line="11" column="23" lean-forward="true" selection-start-line="11" selection-start-column="23" selection-end-line="11" selection-end-column="23" />
           <folding>
             <element signature="e#24#63#0" expanded="false" />
           </folding>
@@ -352,6 +413,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/polc/static-storage/js/visualisation.js">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
@@ -470,12 +532,17 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
           <caret line="20" column="4" lean-forward="false" selection-start-line="20" selection-start-column="4" selection-end-line="21" selection-end-column="39" />
+=======
+        <state relative-caret-position="283">
+          <caret line="145" column="15" lean-forward="false" selection-start-line="145" selection-start-column="15" selection-end-line="145" selection-end-column="15" />
+>>>>>>> parent of bb906dd... Comments added
           <folding>
             <element signature="e#0#44#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< HEAD
     <entry file="file://$PROJECT_DIR$/polc/candidateapp/models.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -502,5 +569,7 @@
         </state>
       </provider>
     </entry>
+=======
+>>>>>>> parent of bb906dd... Comments added
   </component>
 </project>

@@ -14,7 +14,7 @@ django-chartjs==1.2
 django-filter==1.1.0
 django-highcharts==0.1.7
 django-nvd3==0.9.7
-djangorestframework==3.7.7
+djangorestframework==3.11.2
 idna==2.6
 mongoengine==0.15.0
 oauthlib==2.0.6
